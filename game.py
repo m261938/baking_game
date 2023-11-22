@@ -16,21 +16,11 @@ background = screen.copy()
 clock = pygame.time.Clock()
 first_guess = False
 second_guess = False
-first_guess_thing = 0
-second_guess_thing = 0
-a = pygame.image.load("assets/images/a.png").convert()
-b = pygame.image.load("assets/images/b.png").convert()
-c = pygame.image.load("assets/images/c.png").convert()
-d = pygame.image.load("assets/images/d.png").convert()
-e = pygame.image.load("assets/images/e.png").convert()
-f = pygame.image.load("assets/images/f.png").convert()
-g = pygame.image.load("assets/images/g.png").convert()
-h = pygame.image.load("assets/images/h.png").convert()
-i = pygame.image.load("assets/images/i.png").convert()
-j = pygame.image.load("assets/images/j.png").convert()
-k = pygame.image.load("assets/images/k.png").convert()
-l = pygame.image.load("assets/images/l.png").convert()
-
+first_guess_word = 0
+second_guess_word = 0
+fps = 60
+score = 0
+match = 0
 turkey = pygame.image.load("assets/images/turkey.png").convert()
 salt = pygame.image.load("assets/images/salt.png").convert()
 pepper = pygame.image.load("assets/images/pepper.png").convert()
@@ -38,12 +28,21 @@ onion = pygame.image.load("assets/images/onion.png").convert()
 carrot = pygame.image.load("assets/images/carrot.png").convert()
 celery = pygame.image.load("assets/images/celery.png").convert()
 
-letters = [a,b,c,d,e,f,g,h,i,j,k,l]
-place = [(col1,row1),(col2, row1), (col3, row1), (col4, row1), (col1, row2), (col2, row2), (col3, row2),
-         (col4, row2), (col1, row3), (col2, row3), (col3, row3), (col4, row3)]
-turkey = [turkey, turkey, salt, salt, pepper, pepper, onion, onion, carrot, carrot, celery, celery]
-random.shuffle(turkey)
-correct = []
+turkey_foods = {"turkey": turkey, "salt": salt, "pepper": pepper, "onion": onion, "carrot": carrot, "celery": celery}
+place = [(col1,row1),(col1, row2), (col1, row3), (col2, row1),  (col2, row2),  (col2, row3), (col3, row1), (col3, row2),
+         (col3, row3), (col4, row1), (col4, row2), (col4, row3)]
+foods = ['turkey', 'turkey', 'salt', 'salt', 'pepper', 'pepper', 'onion', 'onion', 'carrot', 'carrot',
+         'celery', 'celery']
+
+random.shuffle(foods)
+print(foods)
+places = [[0,1,2,3], [0,1,2,3], [0,1,2,3]]
+food_cols = {foods[0]:0, foods[1]:0, foods[2]:0, foods[3]:1, foods[4]:1, foods[5]:1, foods[6]:2, foods[7]:2, foods[8]:2,
+            foods[9]:3, foods[10]:3, foods[11]:3}
+food_rows = {foods[0]:0, foods[1]:1, foods[2]:2, foods[3]:3, foods[4]:0, foods[5]:1, foods[6]:2, foods[7]:3, foods[8]:0,
+            foods[9]:1, foods[10]:2, foods[11]:3}
+
+correct = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 
 
@@ -58,55 +57,76 @@ def draw_background():
     background.blit(level_text, (SCREEN_WIDTH - TILE_SIZE * 2 - level_text.get_width(), TILE_SIZE // 2))
 
 def draw_board():
-    board_list = []
+    pieces = []
     for i in range(cols):
         for j in range(rows):
             piece = pygame.draw.rect(screen, (140, 109, 24), [i*(BRICK_SIZE+WSPACE)+WSPACE, j*(BRICK_SIZE+HSPACE) + HSPACE +100, BRICK_SIZE, BRICK_SIZE])
-            board_list.append(piece)
-    return board_list
+            pieces.append(piece)
+    return pieces
+
+
+def check_guesses(first, second):
+    global pieces
+    global correct
+    global score
+    global match
+    print(first)
+    if first == second:
+        col1 = food_cols[first]
+        col2 = food_cols[second]
+        row1 = food_rows[first]
+        row2 = food_rows[second]
+        if correct[row1][col1] == 0 and correct[row2][col2] == 0:
+            correct[row1][col1] = 1
+            correct[row2][col2] = 1
+            score += 1
+            match += 1
+            print(correct)
+
+    else:
+        score += 1
 
 
 
 
 
 
-def flip_tile(pic, place):
-    background.blit(pic, place)
 
 
-
-
-#
-draw_background()
-
-
-tilea = None
-tileb = None
-hold = None
 while True:
-
-    screen.blit(background, (0, 0))
-    draw_board()
-
-
+    timer.tick(fps)
+    draw_background()
+    pieces = draw_board()
+    if first_guess and second_guess:
+        check_guesses(first_guess_word,second_guess_word)
+        pygame.time.delay(1000)
+        first_guess = False
+        second_guess = False
     for event in pygame.event.get():
          if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
          if event.type == pygame.MOUSEBUTTONDOWN:
-            for i in range(len(turkey)):
-                button = turkey[i]
+            for i in range(len(pieces)):
+                button = pieces[i]
                 if button.collidepoint(event.pos) and not first_guess:
                     first_guess = True
-                    first_guess_thing = i
-                    print(i)
-                if button.collidepoint(event.pos) and not second_guess and first_guess and i != first_guess_thing:
+                    first_guess_word = foods[i]
+                    location1 = place[i]
+                if button.collidepoint(event.pos) and not second_guess and first_guess and foods[i] != first_guess_word:
                     second_guess = True
-                    second_guess_thing = i
-                    print(i)
-         if first_guess and second_guess:
-            first_guess = False
-            second_guess = False
+                    second_guess_word = foods[i]
+                    location2 = place[i]
+
+         if first_guess:
+            screen.blit(turkey_foods[first_guess_word], location1)
+         if second_guess:
+             screen.blit(turkey_foods[second_guess_word], location2)
+
+
+#error is that i have the same word in each list twice so its only finding the first one and hence only half my things
+#blit out, once I fix that this should work
 
 
     pygame.display.flip()
+pygame.quit()

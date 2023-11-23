@@ -29,14 +29,8 @@ col4 = 4*WSPACE+3*BRICK_SIZE
 # j = pygame.image.load("assets/images/j.png").convert()
 # k = pygame.image.load("assets/images/k.png").convert()
 # l = pygame.image.load("assets/images/l.png").convert()
-#
-# turkey = pygame.image.load("assets/images/turkey.png").convert()
-# salt = pygame.image.load("assets/images/salt.png").convert()
-# pepper = pygame.image.load("assets/images/pepper.png").convert()
-# onion = pygame.image.load("assets/images/onion.png").convert()
-# carrot = pygame.image.load("assets/images/carrot.png").convert()
-# celery = pygame.image.load("assets/images/celery.png").convert()
-#
+
+
 
 
 BACKGROUND_COLOR = (252, 243, 217)

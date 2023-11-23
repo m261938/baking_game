@@ -22,6 +22,7 @@ score = 0
 match = 0
 location1 = ""
 location2 = ""
+
 turkey = pygame.image.load("assets/images/turkey.png").convert()
 salt = pygame.image.load("assets/images/salt.png").convert()
 pepper = pygame.image.load("assets/images/pepper.png").convert()

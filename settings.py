@@ -17,21 +17,10 @@ col1 = WSPACE
 col2 = 2*WSPACE+BRICK_SIZE
 col3 = 3*WSPACE+2*BRICK_SIZE
 col4 = 4*WSPACE+3*BRICK_SIZE
-# a = pygame.image.load("assets/images/a.png").convert()
-# b = pygame.image.load("assets/images/b.png").convert()
-# c = pygame.image.load("assets/images/c.png").convert()
-# d = pygame.image.load("assets/images/d.png").convert()
-# e = pygame.image.load("assets/images/e.png").convert()
-# f = pygame.image.load("assets/images/f.png").convert()
-# g = pygame.image.load("assets/images/g.png").convert()
-# h = pygame.image.load("assets/images/h.png").convert()
-# i = pygame.image.load("assets/images/i.png").convert()
-# j = pygame.image.load("assets/images/j.png").convert()
-# k = pygame.image.load("assets/images/k.png").convert()
-# l = pygame.image.load("assets/images/l.png").convert()
 
 
 
 
-BACKGROUND_COLOR = (252, 243, 217)
-
+BACKGROUND_COLOR = (250, 244, 167)
+HSCOLOR = (92, 66, 28)
+BLACK = (0,0,0)

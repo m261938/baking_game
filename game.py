@@ -15,43 +15,20 @@ except:
 
 pygame.init()
 
-real_overall_score = 0
 big_font = pygame.font.Font("assets/fonts/Queensides.ttf", 48)
 lil_font = pygame.font.Font("assets/fonts/Queensides.ttf", 20)
-level = 1
 timer = pygame.time.Clock()
 pygame.display.set_caption("Thanksgiving Match")
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 screen.fill(BACKGROUND_COLOR)
 background = screen.copy()
 clock = pygame.time.Clock()
-first_guess = False
-second_guess = False
-level1 = False
-first_guess_word = 0
-second_guess_word = 0
-fps = 60
-score = 0
-match = 0
-overall_score = 0
+
 
 pygame.mixer_music.load('assets/sounds/background_music.wav')
 pygame.mixer_music.play(-1)
 win_sound = pygame.mixer.Sound('assets/sounds/Won!.wav')
 
-#pygame.mixer_music.load('assets/sounds/Won!.wav')
-location1 = ""
-location2 = ""
-levels_won_counter = 0
-before_played_color = (133, 12, 34)
-turkey_color = before_played_color
-potato_color = before_played_color
-cranberry_color = before_played_color
-pumpkin_pie_color = before_played_color
-cornbread_color = before_played_color
-roll_color = before_played_color
-pecan_pie_color = before_played_color
-played_color = (19, 94, 45)
 levels_won_text = lil_font.render(f"Levels won: {levels_won_counter}/7", True, (0, 44, 255))
 score_text = lil_font.render(f'Score: {score}', True, (0,44,255))
 
@@ -104,16 +81,13 @@ pecan_pie_foods = {1: pie_crust, 2: pecans, 3: brown_sugar, 4: butter, 5: eggs, 
 
 num_foods = [turkey_foods, mashed_potato_foods, cranberry_foods, pumpkin_pie_foods, cornbread_foods, roll_foods,
              pecan_pie_foods]
-place = [(col1, row1), (col1, row2), (col1, row3), (col2, row1), (col2, row2), (col2, row3), (col3, row1), (col3, row2),
-         (col3, row3), (col4, row1), (col4, row2), (col4, row3)]
 nums = [1, 2, 3, 4, 5, 6, 10, 20, 30, 40, 50, 60]
 random.shuffle(nums)
-places = [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]]
+
 num_cols = {nums[0]: 0, nums[1]: 0, nums[2]: 0, nums[3]: 1, nums[4]: 1, nums[5]: 1, nums[6]: 2, nums[7]: 2, nums[8]: 2,
             nums[9]: 3, nums[10]: 3, nums[11]: 3}
 num_rows = {nums[0]: 0, nums[1]: 1, nums[2]: 2, nums[3]: 0, nums[4]: 1, nums[5]: 2, nums[6]: 0, nums[7]: 1, nums[8]: 2,
             nums[9]: 0, nums[10]: 1, nums[11]: 2}
-correct = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 restart_button = pygame.draw.rect(screen, (255, 255, 255), [525, 10, 180, 80], 0, 5)
 restart_text = big_font.render("restart", True, (0, 0, 0))
@@ -134,8 +108,6 @@ def draw_background():
 def draw_homescreen():
     text = big_font.render("Matching game", True, (0, 44, 255))
     screen.blit(text, (100, 100))
-    #quits = lil_font.render("Enter 'q' to return to homescreen at any point", True, BLACK)
-    #screen.blit(quits, (100, 200))
     turkey_level_print = lil_font.render("Enter 't' for turkey level", True, turkey_color)
     screen.blit(turkey_level_print, (100, 200))
     potato_level_print = lil_font.render("Enter 'p' for potato level", True, potato_color)
@@ -158,7 +130,6 @@ def draw_homescreen():
 
 def draw_board():
     pieces = []
-    # make dependent on which food num foods
     for i in range(cols):
         for j in range(rows):
             piece = pygame.draw.rect(screen, (140, 109, 24), [i * (BRICK_SIZE + WSPACE) + WSPACE,

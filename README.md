@@ -1,5 +1,5 @@
 # baking_game
-Solve each level to make thanksgiving dinner by matching each food together!
+Solve each level to make thanksgiving dinner by matching each food together! <br>
 special thanks to Kerry Johnson and Madison McQuillan
 works like a markdown file in jupyter notebook
 my game incorporates: all the point categories i expected to get

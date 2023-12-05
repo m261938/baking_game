@@ -1,8 +1,7 @@
 # baking_game
 Solve each level to make thanksgiving dinner by matching each food together! <br>
-special thanks to Kerry Johnson and Madison McQuillan
-works like a markdown file in jupyter notebook
-my game incorporates: all the point categories i expected to get
+special thanks to Kerry Johnson and Madison McQuillan <br>
+my game incorporates: <br>
 Mouse Master: Incorporate to mouse events in the game play (2)
 Keyboard King: Incorporate key press events in the game play (2)
 Tiler: Use sprite tiles to create a continuous background or other graphic objects (2)

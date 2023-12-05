@@ -35,7 +35,11 @@ score = 0
 match = 0
 overall_score = 0
 
+pygame.mixer_music.load('assets/sounds/background_music.wav')
+pygame.mixer_music.play(-1)
+win_sound = pygame.mixer.Sound('assets/sounds/Won!.wav')
 
+#pygame.mixer_music.load('assets/sounds/Won!.wav')
 location1 = ""
 location2 = ""
 levels_won_counter = 0
@@ -211,6 +215,7 @@ while True:
         pygame.time.delay(1000)
         piecey = draw_board()
     if match == 6:
+        win_sound.play()
         screen.blit(background, (0, 0))
         match = 0
         correct = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
